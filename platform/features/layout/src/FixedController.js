@@ -38,7 +38,7 @@ define(
          * @constructor
          * @param {Scope} $scope the controller's Angular scope
          */
-        function FixedController($log, $scope, $q, dialogService, telemetrySubscriber, telemetryFormatter) {
+        function FixedController($scope, $q, dialogService, telemetrySubscriber, telemetryFormatter) {
             var gridSize = DEFAULT_GRID_SIZE,
                 gridExtent = DEFAULT_GRID_EXTENT,
                 dragging,
@@ -249,7 +249,6 @@ define(
                 var rawPositions = {};
                 
                 if (ids) {
-                    $log.warn(ids);
                     ids.forEach(function (id, index) {
                         if (!elementProxiesById[id]) {
                             addElement({
