@@ -38,7 +38,7 @@ define(
          * @constructor
          * @param {Scope} $scope the controller's Angular scope
          */
-        function FixedController($scope, $q, dialogService, telemetrySubscriber, telemetryFormatter) {
+        function FixedController($log, $scope, $q, dialogService, telemetrySubscriber, telemetryFormatter) {
             var gridSize = DEFAULT_GRID_SIZE,
                 gridExtent = DEFAULT_GRID_EXTENT,
                 dragging,
@@ -47,6 +47,7 @@ define(
                 elementProxies = [],
                 names = {}, // Cache names by ID
                 values = {}, // Cache values by ID
+                positions = {},
                 elementProxiesById = {},
                 handles = [],
                 moveHandle,
@@ -218,14 +219,7 @@ define(
                 subscription = domainObject &&
                     telemetrySubscriber.subscribe(domainObject, updateValues);
             }
-
-            // Handle changes in the object's composition
-            function updateComposition(ids) {
-                // Populate panel positions
-                // TODO: Ensure defaults here
-                // Resubscribe - objects in view have changed
-                subscribe($scope.domainObject);
-            }
+            
 
             // Add an element to this view
             function addElement(element) {
@@ -245,6 +239,39 @@ define(
                 if ($scope.commit) {
                     $scope.commit("Dropped an element.");
                 }
+            }
+            
+            // Handle changes in the object's composition
+            function updateComposition(ids) {
+                // Populate panel positions
+                // TODO: Ensure defaults here
+                refreshElements();
+                var rawPositions = {};
+                
+                if (ids) {
+                    $log.warn(ids);
+                    ids.forEach(function (id, index) {
+                        if (!elementProxiesById[id]) {
+                            addElement({
+                                type: "fixed.telemetry",
+                                x: Math.floor(index),
+                                y: Math.floor(index),
+                                id: id,
+                                stroke: "transparent",
+                                color: "#cccccc",
+                                titled: true,
+                                width: DEFAULT_DIMENSIONS[0],
+                                height: DEFAULT_DIMENSIONS[1]
+                            });
+                        } else {
+                            elementProxiesById[id].x = Math.floor(index);
+                            elementProxiesById[id].y = Math.floor(index);
+                        }
+                    });
+                }
+                
+                // Resubscribe - objects in view have changed
+                subscribe($scope.domainObject);
             }
 
             // Position a panel after a drop event

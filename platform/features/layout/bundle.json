@@ -164,6 +164,7 @@
                 "key": "FixedController",
                 "implementation": "FixedController.js",
                 "depends": [
+                    "$log",
                     "$scope",
                     "$q",
                     "dialogService",
