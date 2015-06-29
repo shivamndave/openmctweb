@@ -38,7 +38,7 @@ define(
          * @constructor
          * @param {Scope} $scope the controller's Angular scope
          */
-        function FixedController($scope, $q, dialogService, telemetrySubscriber, telemetryFormatter) {
+        function FixedController($log, $scope, $q, dialogService, telemetrySubscriber, telemetryFormatter) {
             var gridSize = DEFAULT_GRID_SIZE,
                 gridExtent = DEFAULT_GRID_EXTENT,
                 dragging,
@@ -49,6 +49,7 @@ define(
                 values = {}, // Cache values by ID
                 positions = {},
                 elementProxiesById = {},
+                elementConfigById = {},
                 handles = [],
                 moveHandle,
                 selection;
@@ -165,8 +166,8 @@ define(
                 // so we may want to restore this.
                 var selected = selection && selection.get(),
                     elements = (($scope.configuration || {}).elements || []),
-                    index = -1; // Start with a 'not-found' value
-
+                    index = -1; // Start with a 'not-found' value             
+                
                 // Find the selection in the new array
                 if (selected !== undefined) {
                     index = elements.indexOf(selected.element);
@@ -182,7 +183,17 @@ define(
                         select(elementProxies[index]);
                     }
                 }
-
+                
+                elementConfigById = {};
+                elements.forEach(function (elementConfig) {
+                    var id = elementConfig.id;
+                    if (elementConfig.type === 'fixed.telemetry') {
+                        // Provide it a cached name/value to avoid flashing
+                        elementConfigById[id] = elementConfigById[id] || [];
+                        elementConfigById[id].push(elementConfig);
+                    }
+                });
+                
                 // Finally, rebuild lists of elements by id to
                 // facilitate faster update when new telemetry comes in.
                 elementProxiesById = {};
@@ -241,30 +252,37 @@ define(
                 }
             }
             
+            function handleDefaultAdd(id, index) {
+                // Position 
+                addElement({
+                    type: "fixed.telemetry",
+                    x: Math.floor(index),
+                    y: Math.floor(index),
+                    id: id,
+                    stroke: "transparent",
+                    color: "#cccccc",
+                    titled: true,
+                    width: DEFAULT_DIMENSIONS[0],
+                    height: DEFAULT_DIMENSIONS[1]
+                });
+            }
+            
             // Handle changes in the object's composition
             function updateComposition(ids) {
                 // Populate panel positions
                 // TODO: Ensure defaults here
                 refreshElements();
-                var rawPositions = {};
-                
+                // If the element is not in the config or proxy list
+                // it will be added to both of them. However if it is 
+                // already found, its position will be set
                 if (ids) {
                     ids.forEach(function (id, index) {
-                        if (!elementProxiesById[id]) {
-                            addElement({
-                                type: "fixed.telemetry",
-                                x: Math.floor(index),
-                                y: Math.floor(index),
-                                id: id,
-                                stroke: "transparent",
-                                color: "#cccccc",
-                                titled: true,
-                                width: DEFAULT_DIMENSIONS[0],
-                                height: DEFAULT_DIMENSIONS[1]
-                            });
-                        } else {
-                            elementProxiesById[id].x = Math.floor(index);
-                            elementProxiesById[id].y = Math.floor(index);
+                        if (!elementProxiesById[id] && !elementConfigById[id]) {
+                            handleDefaultAdd(id, index);
+                        }
+                        else if (elementProxiesById[id] && elementConfigById[id]) {
+                            elementConfigById[id].x = Math.floor(index);
+                            elementConfigById[id].y = Math.floor(index);
                         }
                     });
                 }
