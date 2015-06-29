@@ -252,6 +252,9 @@ define(
                 }
             }
             
+            // Adds a default element to the
+            // fixed position view the way a 
+            // drop action would
             function handleDefaultAdd(id, index) {
                 // Position 
                 addElement({
@@ -277,10 +280,14 @@ define(
                 // already found, its position will be set
                 if (ids) {
                     ids.forEach(function (id, index) {
+                        // Adds an element to the fixed position view if it
+                        // is not found in the poxy and configuration lists
                         if (!elementProxiesById[id] && !elementConfigById[id]) {
                             handleDefaultAdd(id, index);
                         }
                         else if (elementProxiesById[id] && elementConfigById[id]) {
+                            // If found, it sets the default position
+                            // from the index
                             elementConfigById[id].x = Math.floor(index);
                             elementConfigById[id].y = Math.floor(index);
                         }
