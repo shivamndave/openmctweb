@@ -29,6 +29,11 @@ $phoMaxH: 740px;
 $phoHeiPorCheck: "(max-device-height: #{$phoMaxH})";
 $phoHeiLanCheck: "(max-device-width: #{$phoMaxH})";
 
+$phoneWidth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck} and (orientation: portrait)";
+$phoneHeight: "screen and #{$phoWidLanCheck} and #{$phoHeiLanCheck} and (orientation: landscape)";
+
+//$phoneBoth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck}";
+
 $tabMinW: 515px;
 $tabMaxW: 799px;
 $tabWidPorCheck: "(min-device-width: #{$tabMinW}) and (max-device-width: #{$tabMaxW})";
@@ -38,11 +43,6 @@ $tabMinH: 741px;
 $tabMaxH: 1024px;
 $tabHeiPorCheck: "(min-device-height: #{$tabMinH}) and (max-device-height: #{$tabMaxH})";
 $tabHeiLanCheck: "(min-device-width: #{$tabMinH}) and (max-device-width: #{$tabMaxH})";
-
-$phoneWidth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck} and (orientation: portrait)";
-$phoneHeight: "screen and #{$phoWidLanCheck} and #{$phoHeiLanCheck} and (orientation: landscape)";
-
-//$phoneBoth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck}";
 
 $tabletWidth: "screen and #{$tabWidPorCheck} and #{$tabHeiPorCheck} and (orientation: portrait)";
 $tabletHeight: "screen and #{$tabWidLanCheck} and #{$tabHeiLanCheck} and (orientation: landscape)";
