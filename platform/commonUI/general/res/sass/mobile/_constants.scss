@@ -22,42 +22,69 @@
 
 /************************** WINDOW DIMENSIONS FOR RWD */
 $phoMaxW: 514px;
-$phoWidPorCheck: "(max-device-width: #{$phoMaxW})";
-$phoWidLanCheck: "(max-device-height: #{$phoMaxW})";
-
 $phoMaxH: 740px;
-$phoHeiPorCheck: "(max-device-height: #{$phoMaxH})";
-$phoHeiLanCheck: "(max-device-width: #{$phoMaxH})";
 
-$phoneWidth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck} and (orientation: portrait)";
-$phoneHeight: "screen and #{$phoWidLanCheck} and #{$phoHeiLanCheck} and (orientation: landscape)";
+$phoWidPor: "(max-device-width: #{$phoMaxW}) and (max-width: #{$phoMaxW})";
+$phoHeiPor: "(max-device-height: #{$phoMaxH}) and (max-height: #{$phoMaxH})";
 
-//$phoneBoth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck}";
+$phonePortrait: "screen and #{$phoWidPor} and #{$phoHeiPor} and (orientation: portrait)";
+
+//$phoWidLan: "(max-device-height: #{$phoMaxH})  and (max-width: #{$phoMaxH})";
+//$phoHeiLan: "(max-device-width: #{$phoMaxW}) and (max-height: #{$phoMaxW})";
 
 $tabMinW: 515px;
 $tabMaxW: 799px;
-$tabWidPorCheck: "(min-device-width: #{$tabMinW}) and (max-device-width: #{$tabMaxW})";
-$tabWidLanCheck: "(min-device-height: #{$tabMinW}) and (max-device-height: #{$tabMaxW})";
+
+$tabMinWidPor: "(min-device-width: #{$tabMinW}) and (min-width: #{$tabMinW})";
+$tabMaxWidPor: "(max-device-width: #{$tabMaxW}) and (max-width: #{$tabMaxW})";
 
 $tabMinH: 741px;
 $tabMaxH: 1024px;
-$tabHeiPorCheck: "(min-device-height: #{$tabMinH}) and (max-device-height: #{$tabMaxH})";
-$tabHeiLanCheck: "(min-device-width: #{$tabMinH}) and (max-device-width: #{$tabMaxH})";
 
-$tabletWidth: "screen and #{$tabWidPorCheck} and #{$tabHeiPorCheck} and (orientation: portrait)";
-$tabletHeight: "screen and #{$tabWidLanCheck} and #{$tabHeiLanCheck} and (orientation: landscape)";
+$tabMinHeiPor: "(min-device-height: #{$tabMinH}) and (min-height: #{$tabMinH})";
+$tabMaxHeiPor: "(max-device-height: #{$tabMaxH}) and (max-height: #{$tabMaxH})";
 
-//$tabletBoth: "screen and #{$tabWidPorCheck} and #{$tabHeiPorCheck} and (orientation: portrait)";
+$tabletPortrait: "screen and #{$tabMinWidPor} and #{$tabMaxWidPor} and #{$tabMinHeiPor} and #{$tabMaxHeiPor} and (orientation: portrait)";
 
-$compMinW: 1025px;
-$compWidPorCheck: "(min-device-width: #{$compMinW})";
+$comMinW: 800px;
+$comMinH: 1025px;
 
-$compMinH: 800px;
-$compHeiPorCheck: "(min-device-height: #{$compMinH})";
+$comWidPor: "(min-device-width: #{$comMinH})";
+$comHeiPor: "(min-device-height: #{$comMinW})";
 
-$compAll: "screen and #{$compWidPorCheck} and #{$compHeiPorCheck}";
+$computerPortrait: "screen and #{$comWidPor} and #{$comHeiPor} and (orientation: portrait)";
 
-//$compBoth: "screen and (min-device-width: #{$compMinW}) and (min-device-height: #{$compMinH})";
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// $phoWidPorCheck: "(max-device-width: #{$phoMaxW})";
+// $phoWidLanCheck: "(max-device-height: #{$phoMaxW})";
+//
+// $phoHeiPorCheck: "(max-device-height: #{$phoMaxH})";
+// $phoHeiLanCheck: "(max-device-width: #{$phoMaxH})";
+//
+//  $phoneWidth: "screen and #{$phoWidPorCheck} and #{$phoHeiPorCheck} and (orientation: portrait)";
+//  $phoneHeight: "screen and #{$phoWidLanCheck} and #{$phoHeiLanCheck} and (orientation: landscape)";
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// $tabWidPorCheck: "(min-device-width: #{$tabMinW}) and (max-device-width: #{$tabMaxW})";
+// $tabWidLanCheck: "(min-device-height: #{$tabMinW}) and (max-device-height: #{$tabMaxW})";
+//
+// $tabHeiPorCheck: "(min-device-height: #{$tabMinH}) and (max-device-height: #{$tabMaxH})";
+// $tabHeiLanCheck: "(min-device-width: #{$tabMinH}) and (max-device-width: #{$tabMaxH})";
+//
+//  $tabletWidth: "screen and #{$tabWidPorCheck} and #{$tabHeiPorCheck} and (orientation: portrait)";
+//  $tabletHeight: "screen and #{$tabWidLanCheck} and #{$tabHeiLanCheck} and (orientation: landscape)";
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// $compWidPorCheck: "(min-device-width: #{$compMinW})";
+//
+// $compHeiPorCheck: "(min-device-height: #{$compMinH})";
+//
+//  $compAll: "screen and #{$compWidPorCheck} and #{$compHeiPorCheck}";
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $leftPhone: $phoMaxW/2;
 $leftTab: $tabMaxH/2;
